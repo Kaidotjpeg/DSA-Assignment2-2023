@@ -1,0 +1,108 @@
+# Query to get department objectives for a specific department
+query GetDepartmentObjectives($departmentID: Int!) {
+  getDepartmentObjectives(departmentID: $departmentID) {
+    departmentObjectiveID
+    departmentName
+    objectiveDescription
+    departmentGoalPercentage
+  }
+}
+
+# Mutation to create a new department objective
+mutation CreateDepartmentObjective($departmentName: String!, $objectiveDescription: String!, $departmentGoalPercentage: Float!) {
+  createDepartmentObjective(departmentName: $departmentName, objectiveDescription: $objectiveDescription, departmentGoalPercentage: $departmentGoalPercentage) {
+    departmentObjectiveID
+    departmentName
+    objectiveDescription
+    departmentGoalPercentage
+  }
+}
+
+# Mutation to delete a department objective
+mutation DeleteDepartmentObjective($departmentObjectiveID: Int!) {
+  deleteDepartmentObjective(departmentObjectiveID: $departmentObjectiveID)
+}
+
+# Query to get KPIs for a specific employee
+query GetKPIs($employeeID: Int!) {
+  getKPIs(employeeID: $employeeID) {
+    kpiID
+    description
+    unit
+    departmentObjectiveID
+    departmentID
+    weight
+    maxScore
+  }
+}
+
+# Mutation to create a new KPI
+mutation CreateKPI($description: String!, $unit: String, $departmentObjectiveID: Int!, $departmentID: Int!, $weight: Float, $maxScore: Float) {
+  createKPI(description: $description, unit: $unit, departmentObjectiveID: $departmentObjectiveID, departmentID: $departmentID, weight: $weight, maxScore: $maxScore) {
+    kpiID
+    description
+    unit
+    departmentObjectiveID
+    departmentID
+    weight
+    maxScore
+  }
+}
+
+# Mutation to assign KPIs to an employee
+mutation AssignKPIsToEmployee($employeeID: Int!, $kpiIDs: [Int]!) {
+  assignKPIsToEmployee(employeeID: $employeeID, kpiIDs: $kpiIDs)
+}
+
+# Query to get an employee's details
+query GetEmployee($employeeID: Int!) {
+  getEmployee(employeeID: $employeeID) {
+    employeeID
+    firstName
+    lastName
+    jobTitle
+    position
+    role
+    departmentID
+    supervisorID
+    departmentObjectiveID
+  }
+}
+
+# Mutation to create a new employee
+mutation CreateEmployee($firstName: String!, $lastName: String!, $jobTitle: String!, $position: String!, $role: String!, $departmentID: Int!, $departmentObjectiveID: Int!, $supervisorID: Int) {
+  createEmployee(firstName: $firstName, lastName: $lastName, jobTitle: $jobTitle, position: $position, role: $role, departmentID: $departmentID, departmentObjectiveID: $departmentObjectiveID, supervisorID: $supervisorID) {
+    employeeID
+    firstName
+    lastName
+    jobTitle
+    position
+    role
+    departmentID
+    supervisorID
+    departmentObjectiveID
+  }
+}
+
+# Mutation to grade a supervisor's performance
+mutation GradeSupervisor($employeeID: Int!, $score: Float) {
+  gradeSupervisor(employeeID: $employeeID, score: $score)
+}
+
+# Mutation to grade a specific KPI
+mutation GradeKPI($kpiID: Int!, $score: Float) {
+  gradeKPI(kpiID: $kpiID, score: $score)
+}
+
+# Mutation to create a new employee KPI
+mutation CreateEmployeeKPI($employeeID: Int!, $description: String!, $unit: String, $departmentObjectiveID: Int!, $departmentID: Int!, $weight: Float, $maxScore: Float) {
+  createEmployeeKPI(employeeID: $employeeID, description: $description, unit: $unit, departmentObjectiveID: $departmentObjectiveID, departmentID: $departmentID, weight: $weight, maxScore: $maxScore) {
+    kpiID
+    description
+    unit
+    departmentObjectiveID
+    departmentID
+    weight
+    maxScore
+  }
+}

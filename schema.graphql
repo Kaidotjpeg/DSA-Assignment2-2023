@@ -1,0 +1,49 @@
+type DepartmentObjective {
+  departmentObjectiveID: Int!
+  departmentName: String!
+  objectiveDescription: String!
+  departmentGoalPercentage: Float!
+}
+
+type KeyPerformanceIndicator {
+  kpiID: Int!
+  description: String!
+  unit: String
+  departmentObjectiveID: Int!
+  departmentID: Int!
+  weight: Float!
+  maxScore: Float!
+}
+
+type Employee {
+  employeeID: Int!
+  firstName: String!
+  lastName: String!
+  jobTitle: String!
+  position: String!
+  role: String!
+  departmentID: Int!
+  supervisorID: Int
+  departmentObjectiveID: Int
+}
+
+type Query {
+  getDepartmentObjectives(departmentID: Int!): [DepartmentObjective]
+  getKPIs(employeeID: Int!): [KeyPerformanceIndicator]
+  getEmployee(employeeID: Int!): Employee
+  getSupervisor(employeeID: Int!): Employee
+  calculateEmployeeTotalScore(employeeID: Int!): Float
+  viewEmployeeScores(employeeID: Int!): [KeyPerformanceIndicator]
+  getEmployeeKPIs(employeeID: Int!): [KeyPerformanceIndicator]
+}
+
+type Mutation {
+  createDepartmentObjective(departmentName: String!, objectiveDescription: String!, departmentGoalPercentage: Float!): DepartmentObjective
+  deleteDepartmentObjective(departmentObjectiveID: Int!): Boolean
+  createKPI(description: String!, unit: String, departmentObjectiveID: Int!, departmentID: Int!, weight: Float!, maxScore: Float!): KeyPerformanceIndicator
+  assignEmployeeToSupervisor(employeeID: Int!, supervisorID: Int!): Boolean
+  createEmployee(firstName: String!, lastName: String!, jobTitle: String!, position: String!, role: String!, departmentID: Int!, departmentObjectiveID: Int!, supervisorID: Int): Employee
+  gradeSupervisor(employeeID: Int!, score: Float!): Boolean
+  gradeKPI(kpiID: Int!, score: Float!): Boolean
+  createEmployeeKPI(employeeID: Int!, description: String!, unit: String, departmentObjectiveID: Int!, departmentID: Int!, weight: Float!, maxScore: Float!): KeyPerformanceIndicator
+}
